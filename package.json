@@ -3,5 +3,9 @@
     "version": "0.0.1",
     "description": "The offical bot for the Team Biohazard Discord Server",
     "main": "bot.js",
-    "author": "CS-5 (Carson) and FracturedLoop (Josiah)"
+    "author": "CS-5 (Carson) and FracturedLoop (Josiah)",
+    "dependencies": {
+        "github-api": "^3.0.0",
+        "discord.js": "^11.3.0"
+    }
 }

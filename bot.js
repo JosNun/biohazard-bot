@@ -19,11 +19,15 @@ bot.on('message', (message) => {
     let cmd = args[0];
 
     switch (cmd) {
-      // !ping
       case 'ping':
         message.channel.send('Pong!');
         break;
-      // Just add any case commands if you want to..
+      case 'feature':
+        if(!args[1] == "") {
+          console.log(message.content.slice(12));
+          //should probably seperate github logic out into another file
+        }
+        break;
     }
   }
 });
