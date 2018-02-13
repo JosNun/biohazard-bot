@@ -1,30 +1,22 @@
 let Discord = require('discord.io');
-let logger = require('winston');
 let auth = require('./auth.json');
-// Configure logger settings
-logger.remove(logger.transports.Console);
-logger.add(logger.transports.Console, {
-  colorize: true,
-});
-logger.level = 'debug';
 // Initialize Discord Bot
 let bot = new Discord.Client({
   token: auth.token,
   autorun: true,
 });
 bot.on('ready', function(evt) {
-  logger.info('Connected');
-  logger.info('Logged in as: ');
-  logger.info(bot.username + ' - (' + bot.id + ')');
+  console.info('Connected');
+  console.info('Logged in as: ');
+  console.info(bot.username + ' - (' + bot.id + ')');
 });
 bot.on('message', (user, userID, channelID, message, evt) => {
   // Our bot needs to know if it will execute a command
   // It will listen for messages that will start with `!`
-  if (message.substring(0, 1) == '!') {
-    let args = message.substring(1).split(' ');
+  if (message.substring(0, 4) == '!bb ') {
+    let args = message.substring(4).split(' ');
     let cmd = args[0];
 
-    args = args.splice(1);
     switch (cmd) {
       // !ping
       case 'ping':
