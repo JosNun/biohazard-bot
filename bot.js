@@ -23,9 +23,9 @@ bot.on('message', (message) => {
         message.channel.send('Pong!');
         break;
       case 'feature':
-        if(!args[1] == "") {
+        if (!args[1] === '') {
           console.log(message.content.slice(12));
-          //should probably seperate github logic out into another file
+          // should probably seperate github logic out into another file
         }
         break;
     }
