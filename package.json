@@ -3,8 +3,5 @@
     "version": "0.0.1",
     "description": "The offical bot for the Team Biohazard Discord Server",
     "main": "bot.js",
-    "author": "CS-5 (Carson) and FracturedLoop (Josiah)",
-    "dependencies": {
-        "discord.io": "github:woor/discord.io#gateway_v6"
-    }
+    "author": "CS-5 (Carson) and FracturedLoop (Josiah)"
 }

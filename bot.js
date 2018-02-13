@@ -1,31 +1,33 @@
-let Discord = require('discord.io');
+let Discord = require('discord.js');
 let auth = require('./auth.json');
-// Initialize Discord Bot
-let bot = new Discord.Client({
-  token: auth.token,
-  autorun: true,
-});
-bot.on('ready', function(evt) {
+
+
+// Create an instance of a Discord client
+let bot = new Discord.Client();
+
+
+// The ready event is vital, it means that your bot will only start reacting to information
+// from Discord _after_ ready is emitted
+bot.on('ready', () => {
   console.info('Connected');
   console.info('Logged in as: ');
-  console.info(bot.username + ' - (' + bot.id + ')');
+  console.info(bot.user.username + ' - (' + bot.user.id + ')');
 });
-bot.on('message', (user, userID, channelID, message, evt) => {
-  // Our bot needs to know if it will execute a command
-  // It will listen for messages that will start with `!`
-  if (message.substring(0, 4) == '!bb ') {
-    let args = message.substring(4).split(' ');
+
+// Create an event listener for messages
+bot.on('message', message => {
+  if (message.content.substring(0, 4) == '!bb ') {
+    let args = message.content.substring(4).split(' ');
     let cmd = args[0];
 
     switch (cmd) {
       // !ping
       case 'ping':
-        bot.sendMessage({
-          to: channelID,
-          message: 'Pong!',
-        });
+        message.channel.send("Pong!")
         break;
       // Just add any case commands if you want to..
     }
   }
 });
+
+bot.login(auth.token);
