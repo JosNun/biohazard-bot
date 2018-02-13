@@ -1,11 +1,10 @@
 let Discord = require('discord.js');
 let auth = require('./auth.json');
+let github = require('./github-interface.js');
 
 // Create an instance of a Discord client
 let bot = new Discord.Client();
 
-// The ready event is vital, it means that your bot will only start reacting
-// to information from Discord _after_ ready is emitted
 bot.on('ready', () => {
   console.info('Connected');
   console.info('Logged in as: ');
@@ -24,8 +23,9 @@ bot.on('message', (message) => {
         break;
       case 'feature':
         if (!args[1] === '') {
+          // something doesn't work here
           console.log(message.content.slice(12));
-          // should probably seperate github logic out into another file
+          github.newFeature(message.content.slice(12));
         }
         break;
     }
