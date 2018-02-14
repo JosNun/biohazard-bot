@@ -22,7 +22,7 @@ bot.on('message', (message) => {
         message.channel.send('Pong!');
         break;
       case 'feature':
-        if (!args[1] === '') {
+        if (!args[1] == '') {
           // something doesn't work here
           console.log(message.content.slice(12));
           github.newFeature(message.content.slice(12));
@@ -32,4 +32,4 @@ bot.on('message', (message) => {
   }
 });
 
-bot.login(auth.token);
+bot.login(auth.discordToken);
