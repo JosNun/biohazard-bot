@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const auth = require('./auth.json');
 const github = require('./github-interface.js');
+const tba = require('./tba-interface.js');
 
 // Create an instance of a Discord client
 let bot = new Discord.Client();
@@ -41,6 +42,12 @@ bot.on('message', (message) => {
         message.channel.send(
           'Current commands include: `!bb help`, `!bb ping`, and `!bb feature [Your feature request here]`'
         );
+        break;
+      case 'tba':
+        if (args[1] == 'team') {
+          message.channel.send(tba.getTeamInfo(args[2], args[3]));
+        }
+        break;
     }
   }
 });
@@ -53,4 +60,4 @@ bot.on('guildMemberAdd', (member) => {
   );
 });
 
-bot.login(auth.discordToken);
+bot.login(auth.discordDevToken);
