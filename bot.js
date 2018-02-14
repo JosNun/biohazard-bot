@@ -23,13 +23,24 @@ bot.on('message', (message) => {
         break;
       case 'feature':
         if (!args[1] == '') {
-          // something doesn't work here
-          console.log(message.content.slice(12));
-          github.newFeature(message.content.slice(12));
+          github.newFeature(message.content.slice(12), message.author.username);
         }
         break;
+      case 'help':
+      case '?':
+        message.channel.send(
+          'Current commands include: `!bb ping`, `!bb feature [Your feature request here]`'
+        );
     }
   }
+});
+
+bot.on('guildMemberAdd', (member) => {
+  let channel = member.guild.channels.find('name', 'bot-testing');
+  if (!channel) return;
+  channel.send(
+    'Welcome to the Biohazard Discord server, ${member}! Set your nickname to something people will recognize!'
+  );
 });
 
 bot.login(auth.discordToken);

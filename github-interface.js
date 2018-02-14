@@ -5,12 +5,12 @@ let gh = new github({
   token: auth.githubToken,
 });
 
-exports.newFeature = function(featureString) {
+exports.newFeature = function(featureString, author) {
   let issue = gh.getIssues('CS-5', 'biohazard-bot');
 
   let issueData = {
     title: featureString,
-    body: 'This was an automatic feature reqest',
+    body: '_This was an automatic feature reqest by ' + author + '_',
     labels: ['automated feature request'],
   };
 
