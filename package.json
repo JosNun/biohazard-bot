@@ -5,7 +5,7 @@
     "main": "bot.js",
     "author": "CS-5 (Carson) and FracturedLoop (Josiah)",
     "dependencies": {
-        "discord.io": "github:woor/discord.io#gateway_v6",
-        "winston": "^2.4.0"
+        "github-api": "^3.0.0",
+        "discord.js": "^11.3.0"
     }
 }

@@ -1,39 +1,56 @@
-let Discord = require('discord.io');
-let logger = require('winston');
-let auth = require('./auth.json');
-// Configure logger settings
-logger.remove(logger.transports.Console);
-logger.add(logger.transports.Console, {
-  colorize: true,
+const Discord = require('discord.js');
+const auth = require('./auth.json');
+const github = require('./github-interface.js');
+
+// Create an instance of a Discord client
+let bot = new Discord.Client();
+
+bot.on('ready', () => {
+  console.info('Connected');
+  console.info('Logged in as: ');
+  console.info(bot.user.username + ' - (' + bot.user.id + ')');
 });
-logger.level = 'debug';
-// Initialize Discord Bot
-let bot = new Discord.Client({
-  token: auth.token,
-  autorun: true,
-});
-bot.on('ready', function(evt) {
-  logger.info('Connected');
-  logger.info('Logged in as: ');
-  logger.info(bot.username + ' - (' + bot.id + ')');
-});
-bot.on('message', (user, userID, channelID, message, evt) => {
-  // Our bot needs to know if it will execute a command
-  // It will listen for messages that will start with `!`
-  if (message.substring(0, 1) == '!') {
-    let args = message.substring(1).split(' ');
+
+// Create an event listener for messages
+bot.on('message', (message) => {
+  if (message.content.substring(0, 4) == '!bb ') {
+    let args = message.content.substring(4).split(' ');
     let cmd = args[0];
 
-    args = args.splice(1);
     switch (cmd) {
-      // !ping
       case 'ping':
-        bot.sendMessage({
-          to: channelID,
-          message: 'Pong!',
-        });
+        message.channel.send('Pong!');
         break;
-      // Just add any case commands if you want to..
+      case 'feature':
+        if (!args[1] == '') {
+          let issue = github
+            .newFeature(message.content.slice(12), message.author.username)
+            .then(({data}) => {
+              message.channel.send(
+                `Your feature request has been created, and is accessible here: ${
+                  data.html_url
+                }`
+              );
+            });
+
+          console.dir(issue);
+        }
+        break;
+      case 'help':
+      case '?':
+        message.channel.send(
+          'Current commands include: `!bb help`, `!bb ping`, and `!bb feature [Your feature request here]`'
+        );
     }
   }
 });
+
+bot.on('guildMemberAdd', (member) => {
+  let channel = member.guild.channels.find('name', 'bot-testing');
+  if (!channel) return;
+  channel.send(
+    `Welcome to the Biohazard Discord server, ${member}! Set your nickname to something people will recognize!`
+  );
+});
+
+bot.login(auth.discordToken);
