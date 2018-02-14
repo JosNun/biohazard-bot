@@ -24,12 +24,13 @@ bot.on('message', (message) => {
       case 'feature':
         if (!args[1] == '') {
           github.newFeature(message.content.slice(12), message.author.username);
+          message.channel.send('_TODO: Reply with link to request_');
         }
         break;
       case 'help':
       case '?':
         message.channel.send(
-          'Current commands include: `!bb ping`, `!bb feature [Your feature request here]`'
+          'Current commands include: `!bb help`, `!bb ping`, and `!bb feature [Your feature request here]`'
         );
     }
   }
