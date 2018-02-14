@@ -1,5 +1,5 @@
-let github = require('github-api');
-let auth = require('./auth.json');
+const github = require('github-api');
+const auth = require('./auth.json');
 
 let gh = new github({
   token: auth.githubToken,
@@ -14,5 +14,5 @@ exports.newFeature = function(featureString, author) {
     labels: ['automated feature request'],
   };
 
-  issue.createIssue(issueData);
+  return issue.createIssue(issueData);
 };

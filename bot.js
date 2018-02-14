@@ -1,6 +1,6 @@
-let Discord = require('discord.js');
-let auth = require('./auth.json');
-let github = require('./github-interface.js');
+const Discord = require('discord.js');
+const auth = require('./auth.json');
+const github = require('./github-interface.js');
 
 // Create an instance of a Discord client
 let bot = new Discord.Client();
@@ -23,8 +23,17 @@ bot.on('message', (message) => {
         break;
       case 'feature':
         if (!args[1] == '') {
-          github.newFeature(message.content.slice(12), message.author.username);
-          message.channel.send('_TODO: Reply with link to request_');
+          let issue = github
+            .newFeature(message.content.slice(12), message.author.username)
+            .then(({data}) => {
+              message.channel.send(
+                `Your feature request has been created, and is accessible here: ${
+                  data.html_url
+                }`
+              );
+            });
+
+          console.dir(issue);
         }
         break;
       case 'help':
@@ -40,7 +49,7 @@ bot.on('guildMemberAdd', (member) => {
   let channel = member.guild.channels.find('name', 'bot-testing');
   if (!channel) return;
   channel.send(
-    'Welcome to the Biohazard Discord server, ${member}! Set your nickname to something people will recognize!'
+    `Welcome to the Biohazard Discord server, ${member}! Set your nickname to something people will recognize!`
   );
 });
 
