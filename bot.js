@@ -33,7 +33,6 @@ bot.on('message', (message) => {
                 }`
               );
             });
-
           console.dir(issue);
         }
         break;
@@ -45,7 +44,11 @@ bot.on('message', (message) => {
         break;
       case 'tba':
         if (args[1] == 'team') {
-          message.channel.send(tba.getTeamInfo(args[2], args[3]));
+          tba.getTeamInfo(args[2], (data) => {
+            let teamData = JSON.parse(data);
+            let teamName = teamData.nickname;
+            message.channel.send(teamName);
+          });
         }
         break;
     }
