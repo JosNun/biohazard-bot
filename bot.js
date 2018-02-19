@@ -46,8 +46,16 @@ bot.on('message', (message) => {
         if (args[1] == 'team') {
           tba.getTeamInfo(args[2], (data) => {
             let teamData = JSON.parse(data);
+            let embed = new Discord.RichEmbed();
+            embed.setTitle('Team Stats');
+            embed.setColor('#4cd626');
+
+            Object.keys(teamData).forEach((key) => {
+              if (!teamData[key]) return;
+              embed.addField(key, teamData[key]);
+            });
             let teamName = teamData.nickname;
-            message.channel.send(teamName);
+            message.channel.send(embed);
           });
         }
         break;

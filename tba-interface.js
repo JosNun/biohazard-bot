@@ -9,7 +9,7 @@ let authHeader = {
 exports.getTeamInfo = function(number, callback) {
   let options = {
     hostname: 'www.thebluealliance.com',
-    path: `/api/v3/team/frc${number}`,
+    path: `/api/v3/team/frc${number}/simple`,
     headers: authHeader,
   };
   let team = https
