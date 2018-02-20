@@ -7,12 +7,10 @@ const fs = require('fs');
 let statuses;
 
 fs.readFile('statuses.txt', 'utf8', (err, data) => {
-  let lines = data.split('\n');
-  lines = lines.filter((line, i) => {
-    if (!(line[0] === '#' || line[0] === '')) {
-      return true;
-    }
-  });
+  let strings = data.split('\n');
+  let lines = strings.filter(
+    (line) => !(line.startsWith('#') || line.startsWith('\n'))
+  );
   statuses = lines.map((str, i) => {
     let obj = {};
     let parts = str.split('-');
@@ -74,7 +72,7 @@ bot.on('message', (message) => {
         break;
       case 'feature':
         if (!args[1] == '') {
-          let issue = github
+          github
             .newFeature(message.content.slice(12), message.author.username)
             .then(({data}) => {
               message.channel.send(
@@ -98,7 +96,7 @@ bot.on('message', (message) => {
         if (!isNaN(parseInt(args[1]))) {
           if (args[2]) {
             switch (args[2]) {
-              case events:
+              case 'events':
                 break;
               default:
                 console.log(`Nothing to do for \`${args[2]}\``);
