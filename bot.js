@@ -93,8 +93,8 @@ bot.on('message', (message) => {
         );
         break;
       case 'tba':
-        if (!args[1]) args[1] = '';
-        // If the first argument is a number...
+        if (!args[1]) args[1] = ''; // if there isn't any args to tba, make it an empty string to prevent crashes resulting from undefined (at some point, we should have it respond with how to use the tba command)
+        // If the first argument is a number, and therefore a team...
         if (!isNaN(parseInt(args[1]))) {
           if (args[2]) {
             switch (args[2]) {
@@ -105,25 +105,7 @@ bot.on('message', (message) => {
             }
           } else {
             tba.getTeamInfo(args[1], (data) => {
-              let embed = new Discord.RichEmbed();
-              embed
-                .setTitle('Team Stats')
-                .setColor('#4cd626')
-                .setThumbnail(
-                  'https://frcdesigns.files.wordpress.com/2017/06/android_launcher_icon_blue_512.png'
-                );
-
-              Object.keys(data).forEach((key) => {
-                if (!data[key]) return;
-                embed.addField(key, data[key]);
-              });
-              message.channel.send(embed);
-            });
-          }
-        } else {
-          switch (args[1].toLowerCase()) {
-            case 'team':
-              tba.getTeamInfo(args[2], (data) => {
+              if (!data['Errors']) {
                 let embed = new Discord.RichEmbed();
                 embed
                   .setTitle('Team Stats')
@@ -137,6 +119,50 @@ bot.on('message', (message) => {
                   embed.addField(key, data[key]);
                 });
                 message.channel.send(embed);
+              } else {
+                let embed = new Discord.RichEmbed();
+                embed
+                  .setTitle('Uh Oh')
+                  .setColor('#f44')
+                  .addField(
+                    'Something broke :(',
+                    JSON.stringify(data, null, 2)
+                  );
+
+                message.channel.send(embed);
+              }
+            });
+          }
+        } else {
+          switch (args[1].toLowerCase()) {
+            case 'team':
+              tba.getTeamInfo(args[2], (data) => {
+                if (!data['Errors']) {
+                  let embed = new Discord.RichEmbed();
+                  embed
+                    .setTitle('Team Stats')
+                    .setColor('#4cd626')
+                    .setThumbnail(
+                      'https://frcdesigns.files.wordpress.com/2017/06/android_launcher_icon_blue_512.png'
+                    );
+
+                  Object.keys(data).forEach((key) => {
+                    if (!data[key]) return;
+                    embed.addField(key, data[key]);
+                  });
+                  message.channel.send(embed);
+                } else {
+                  let embed = new Discord.RichEmbed();
+                  embed
+                    .setTitle('Uh Oh')
+                    .setColor('#f44')
+                    .addField(
+                      'Something broke :(',
+                      JSON.stringify(data, null, 2)
+                    );
+
+                  message.channel.send(embed);
+                }
               });
               break;
             case 'help':
