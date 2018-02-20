@@ -1,0 +1,15 @@
+# format: prefix-activity
+# Valid prefixes are (p)laying, (w)atching, (l)istening, or (s)treaming
+# Activity is any string
+w-you
+w-your every move
+w-you silently
+w-everything
+w-nyan cat
+p-with kittens
+p-the bagpipes
+p-on the road
+l-the wind
+l-gravitational waves
+l-a silence
+s-absolutely nothing

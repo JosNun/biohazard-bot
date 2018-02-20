@@ -28,11 +28,11 @@ let authHeader = {
 module.exports.getTeamInfo = function(options, callback) {
   let path = `/team/frc`;
   if (typeof options === 'string') {
-    path += options;
+    path += `${options}/simple`;
   } else if (typeof options === 'object') {
     let num = options.number || undefined;
     if (!num) return new Error('Team number is not defined');
-    let simple = options.simple ? '/simple' : '';
+    let simple = !options.simple ? '/simple' : '';
 
     path = `${path}${num}${simple}`;
     console.log(path);
