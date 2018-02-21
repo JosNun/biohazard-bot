@@ -1,8 +1,9 @@
 const Discord = require('discord.js');
 const auth = require('./auth.json');
-const github = require('./github.js');
-const tba = require('./tba.js');
+const github = require('./github');
+const tba = require('./tba');
 const fs = require('fs');
+const xkcd = require('./xkcd');
 
 let statuses;
 
@@ -89,6 +90,9 @@ bot.on('message', (message) => {
           'Current commands include: `!bb help`, `!bb ping`,' +
             ' and `!bb feature [Your feature request here]`'
         );
+        break;
+      case 'xkcd':
+        xkcd.getComics(args[1]);
         break;
       case 'tba':
         if (!args[1]) args[1] = ''; // if there isn't any args to tba, make it an empty string to prevent crashes resulting from undefined (at some point, we should have it respond with how to use the tba command)

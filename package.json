@@ -6,6 +6,7 @@
     "author": "CS-5 (Carson) and FracturedLoop (Josiah)",
     "dependencies": {
         "bluealliance": "^0.8.8",
+        "cheerio": "^1.0.0-rc.2",
         "discord.js": "^11.3.0",
         "github-api": "^3.0.0"
     }
