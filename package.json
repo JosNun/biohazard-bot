@@ -1,12 +1,16 @@
 {
-    "name": "biohazard-bot",
-    "version": "0.0.1",
-    "description": "The offical bot for the Team Biohazard Discord Server",
-    "main": "bot.js",
-    "author": "CS-5 (Carson) and FracturedLoop (Josiah)",
-    "dependencies": {
-        "bluealliance": "^0.8.8",
-        "discord.js": "^11.3.0",
-        "github-api": "^3.0.0"
-    }
+  "name": "biohazard-bot",
+  "version": "0.0.2",
+  "description": "The offical bot for the Team Biohazard Discord Server",
+  "main": "bot.js",
+  "author": "CS-5 (Carson) and FracturedLoop (Josiah)",
+  "dependencies": {
+    "bluealliance": "^0.8.8",
+    "discord.js": "^11.3.0",
+    "github-api": "^3.0.0",
+    "vm2": "^3.5.2"
+  },
+  "scripts": {
+    "develop": "node bot.js"
+  }
 }

@@ -3,6 +3,7 @@ const auth = require('./auth.json');
 const github = require('./github.js');
 const tba = require('./tba.js');
 const fs = require('fs');
+const {VM} = require('vm2');
 
 let statuses;
 
@@ -87,7 +88,7 @@ bot.on('message', (message) => {
       case '?':
         message.channel.send(
           'Current commands include: `!bb help`, `!bb ping`,' +
-            ' and `!bb feature [Your feature request here]`'
+            ' and `!bb feature [Your feature request here]. Also, try !math.`'
         );
         break;
       case 'tba':
@@ -168,6 +169,34 @@ bot.on('message', (message) => {
               message.channel.send('Valid arguments are `team` and `help`.');
           }
         }
+    }
+  } else if (message.content.startsWith('!math')) {
+    if (message.content.length < 6) {
+      console.log('helping :)');
+      message.channel.send(
+        'Try shooting me a javascript expression, and I\'ll spit out the result. Try "!math \'314159\'.split(\'\').reduce((acc, el) => { return acc + parseInt(el) }, 0);"'
+      );
+      return;
+    }
+
+    let query = message.content.substring(6);
+    let result = '';
+
+    try {
+      result = new VM({
+        timeout: 1000,
+        sandbox: {},
+      }).run(query);
+    } catch (err) {
+      console.error('Failed to execute script.', err);
+    }
+
+    console.log(`Result: ${result}`);
+
+    if (result && typeof result !== 'object') {
+      message.channel.send(result);
+    } else {
+      message.channel.send('There\'s an error in your script :/');
     }
   }
 });
