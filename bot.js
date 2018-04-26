@@ -69,7 +69,7 @@ bot.on('message', (message) => {
         bot.setRandomStatus();
         break;
       case 'ping':
-        message.channel.send('Pong!');
+        message.channel.send('Pong!').catch(console.error);
         break;
       case 'feature':
         if (!args[1] == '') {
@@ -81,15 +81,19 @@ bot.on('message', (message) => {
                   data.html_url
                 }`
               );
-            });
+            })
+            .catch(console.error);
         }
         break;
       case 'help':
       case '?':
-        message.channel.send(
-          'Current commands include: `!bb help`, `!bb ping`,' +
-            ' and `!bb feature [Your feature request here]. Also, try !math.`'
-        );
+        message.channel
+          .send(
+            'Current commands include: `!bb help`, `!bb ping`,' +
+              ' and `!bb feature [Your feature request here]. Also, try !math.`'
+          )
+          .catch(console.error);
+        message.delete(5000).catch(console.error);
         break;
       case 'tba':
         if (!args[1]) args[1] = ''; // if there isn't any args to tba, make it an empty string to prevent crashes resulting from undefined (at some point, we should have it respond with how to use the tba command)
@@ -117,7 +121,7 @@ bot.on('message', (message) => {
                   if (!data[key]) return;
                   embed.addField(key, data[key]);
                 });
-                message.channel.send(embed);
+                message.channel.send(embed).catch(console.error);
               } else {
                 let embed = new Discord.RichEmbed();
                 embed
@@ -128,7 +132,7 @@ bot.on('message', (message) => {
                     JSON.stringify(data, null, 2)
                   );
 
-                message.channel.send(embed);
+                message.channel.send(embed).catch(console.error);
               }
             });
           }
@@ -149,7 +153,7 @@ bot.on('message', (message) => {
                     if (!data[key]) return;
                     embed.addField(key, data[key]);
                   });
-                  message.channel.send(embed);
+                  message.channel.send(embed).catch(console.error);
                 } else {
                   let embed = new Discord.RichEmbed();
                   embed
@@ -160,22 +164,25 @@ bot.on('message', (message) => {
                       JSON.stringify(data, null, 2)
                     );
 
-                  message.channel.send(embed);
+                  message.channel.send(embed).catch(console.error);
                 }
               });
               break;
             case 'help':
             default:
-              message.channel.send('Valid arguments are `team` and `help`.');
+              message.channel
+                .send('Valid arguments are `team` and `help`.')
+                .catch(console.error);
           }
         }
     }
   } else if (message.content.startsWith('!math')) {
     if (message.content.length < 6) {
-      console.log('helping :)');
-      message.channel.send(
-        'Try shooting me a javascript expression, and I\'ll spit out the result. Try "!math \'314159\'.split(\'\').reduce((acc, el) => { return acc + parseInt(el) }, 0);"'
-      );
+      message.channel
+        .send(
+          'Try shooting me a javascript expression, and I\'ll spit out the result. Try "!math \'314159\'.split(\'\').reduce((acc, el) => { return acc + parseInt(el) }, 0);"'
+        )
+        .catch(console.error);
       return;
     }
 
@@ -194,9 +201,11 @@ bot.on('message', (message) => {
     console.log(`Result: ${result}`);
 
     if (result && typeof result !== 'object') {
-      message.channel.send(result);
+      message.channel.send(result).catch(console.error);
     } else {
-      message.channel.send('There\'s an error in your script :/');
+      message.channel
+        .send('There\'s an error in your script :/')
+        .catch(console.error);
     }
   }
 });
@@ -204,12 +213,14 @@ bot.on('message', (message) => {
 bot.on('guildMemberAdd', (member) => {
   let channel = member.guild.channels.find('name', 'bot-testing');
   if (!channel) return;
-  channel.send(
-    `Welcome to the Biohazard Discord server, ${member}! Set your nickname to something people will recognize!`
-  );
+  channel
+    .send(
+      `Welcome to the Biohazard Discord server, ${member}! Set your nickname to something people will recognize!`
+    )
+    .catch(console.error);
 });
 
-bot.login(auth.discordDevToken);
+bot.login(auth.discordDevToken).catch(console.error);
 
 setInterval(() => {
   bot.setRandomStatus();
